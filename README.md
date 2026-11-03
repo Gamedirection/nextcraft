@@ -12,6 +12,24 @@ Open and edit your Nextcloud files in the open-source [Craft apps](https://githu
 - **Locks.** With the Files lock app enabled, an opened file is locked for others while you edit it.
 - **Live sessions.** FigCraft's live co-editing can use a self-hosted `figcraft-server` (see below). For co-editing Office documents, use Nextcloud Office (Collabora), which stays available in "Open with…".
 
+## Screenshots
+
+**Open from Nextcloud inside any app.** An app's own Open/Import dialog offers your Nextcloud files or the device (MaterialCraft):
+
+![MaterialCraft's Open dialog offering From Nextcloud or From this device](docs/screenshots/open-from-nextcloud.png)
+
+**ArtCraft Launcher (optional).** The whole suite on one page; **Open** starts the app in NextCraft:
+
+![The launcher: every Craft app with an Open button pointing at NextCraft](docs/screenshots/launcher.png)
+
+It sits at the end of Nextcloud's app menu:
+
+![ArtCraft Launcher in the Nextcloud app menu](docs/screenshots/app-menu.png)
+
+**Live sessions (FigCraft)** through a self-hosted `figcraft-server` on your Nextcloud's address:
+
+![FigCraft's live session panel with edit and view links](docs/screenshots/figcraft-live-session.png)
+
 ## Install
 
 Requirements: Nextcloud 34–35, PHP zip extension, outbound HTTPS to `api.github.com`, `github.com` and `objects.githubusercontent.com`, and about 400 MB free in the apps folder if you install every app.
