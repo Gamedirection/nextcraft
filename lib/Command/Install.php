@@ -23,7 +23,9 @@ class Install extends Command {
 			->addArgument('apps', InputArgument::IS_ARRAY, 'App ids, e.g. wordcraft gridcraft')
 			->addOption('all', 'a', InputOption::VALUE_NONE, 'All apps in the catalog')
 			->addOption('tag', 't', InputOption::VALUE_REQUIRED, 'Install this release tag (single app only)')
-			->addOption('force', 'f', InputOption::VALUE_NONE, 'Reinstall even when the version is already installed');
+			->addOption('force', 'f', InputOption::VALUE_NONE, 'Reinstall even when the version is already installed')
+			->addOption('zip', null, InputOption::VALUE_REQUIRED, 'Install a local web build zip instead of a release (single app; needs --build-version)')
+			->addOption('build-version', null, InputOption::VALUE_REQUIRED, 'Version label for --zip, e.g. 0.13.0-selfhosted');
 	}
 
 	protected function selection(InputInterface $input, bool $defaultInstalled): array {
@@ -44,6 +46,17 @@ class Install extends Command {
 
 	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$ids = $this->selection($input, false);
+		if ($input->hasOption('zip') && $input->getOption('zip') !== null) {
+			$zip = (string)$input->getOption('zip');
+			$version = (string)$input->getOption('build-version');
+			if (count($ids) !== 1 || $version === '' || !is_file($zip)) {
+				$output->writeln('<error>--zip needs one app, an existing file and --build-version</error>');
+				return 1;
+			}
+			$result = $this->installer->installZip($ids[0], $version, $zip);
+			$output->writeln("{$ids[0]}: installed local build {$result['version']}");
+			return 0;
+		}
 		if ($ids === []) {
 			$output->writeln('<error>Name the apps to install, or use --all</error>');
 			return 1;

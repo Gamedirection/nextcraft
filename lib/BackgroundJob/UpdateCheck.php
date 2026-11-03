@@ -40,7 +40,8 @@ class UpdateCheck extends TimedJob {
 		$notified = $this->appConfig->getValueArray(Application::APP_ID, 'notified', []);
 		foreach ($this->installer->installed() as $id => $entry) {
 			$app = $this->catalog->app($id);
-			if ($app === null) {
+			// Local builds (installed from a zip) are the admin's to update.
+			if ($app === null || ($entry['tag'] ?? null) === null) {
 				continue;
 			}
 			try {

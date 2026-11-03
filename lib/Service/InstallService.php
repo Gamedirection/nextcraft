@@ -10,6 +10,7 @@ use OCP\Files\IAppData;
 use OCP\Files\NotFoundException;
 use OCP\IAppConfig;
 use OCP\ITempManager;
+use OCP\IURLGenerator;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -29,6 +30,7 @@ class InstallService {
 		private IAppConfig $appConfig,
 		private IAppData $appData,
 		private ITempManager $tempManager,
+		private IURLGenerator $urlGenerator,
 		private LoggerInterface $logger,
 	) {
 	}
@@ -76,25 +78,64 @@ class InstallService {
 		try {
 			$this->releases->download($release['zipUrl'], $tmp);
 			$this->verify($release, $tmp);
-			$this->unpack($id, $version, $tmp);
-			$this->cacheZip($id, $version, $tmp);
+			return $this->installZip($id, $version, $tmp, $release['tag']);
 		} finally {
 			@unlink($tmp);
 		}
+	}
+
+	/**
+	 * Installs a web build from a local zip the admin supplies (e.g. a self-built ArtCraft
+	 * Launcher that opens NextCraft instead of offering downloads). Not checksum-verified.
+	 * @return array{id: string, version: string, changed: bool}
+	 */
+	public function installZip(string $id, string $version, string $zipFile, ?string $tag = null): array {
+		$this->catalog->app($id) ?? throw new \InvalidArgumentException("Unknown Craft app: {$id}");
+		$version = $this->safeSegment($version);
+		$current = $this->installed()[$id] ?? null;
+		$this->unpack($id, $version, $zipFile);
+		$this->cacheZip($id, $version, $zipFile);
 
 		$installed = $this->installed();
 		$previous = $current !== null && $current['version'] !== $version ? $current['version'] : ($current['previous'] ?? null);
 		$installed[$id] = [
 			'version' => $version,
-			'tag' => $release['tag'],
+			'tag' => $tag,
 			'previous' => $previous,
 			'installedAt' => time(),
 			'icon' => $this->findIcon($this->versionDir($id, $version)),
 		];
 		$this->appConfig->setValueArray(Application::APP_ID, 'installed', $installed);
 		$this->prune($id, [$version, $previous]);
+		$this->writeLauncherLinks();
 		$this->logger->info("NextCraft installed {$id} {$version}");
 		return ['id' => $id, 'version' => $version, 'changed' => true];
+	}
+
+	/**
+	 * Writes craft-links.json next to every installed launcher build: app id => this
+	 * Nextcloud's editor URL for each installed Craft app, so the launcher's Open buttons open
+	 * them here (apps that aren't installed keep their download buttons).
+	 */
+	public function writeLauncherLinks(): void {
+		$installed = $this->installed();
+		$links = [];
+		foreach ($installed as $id => $entry) {
+			if (!($this->catalog->app($id)['launcher'] ?? false)) {
+				$links[$id] = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.editor.show', ['app' => $id]);
+			}
+		}
+		foreach ($installed as $id => $entry) {
+			if (!($this->catalog->app($id)['launcher'] ?? false)) {
+				continue;
+			}
+			foreach (array_filter([$entry['version'], $entry['previous'] ?? null]) as $version) {
+				$dir = $this->versionDir($id, $version);
+				if (is_dir($dir)) {
+					file_put_contents($dir . '/craft-links.json', json_encode((object)$links, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+				}
+			}
+		}
 	}
 
 	/** Switches $id back to its previous version, if that is still on disk. */
@@ -107,6 +148,7 @@ class InstallService {
 		}
 		$installed[$id] = array_merge($entry, ['version' => $previous, 'previous' => $entry['version'], 'installedAt' => time()]);
 		$this->appConfig->setValueArray(Application::APP_ID, 'installed', $installed);
+		$this->writeLauncherLinks();
 		return $previous;
 	}
 
@@ -115,6 +157,7 @@ class InstallService {
 		unset($installed[$id]);
 		$this->appConfig->setValueArray(Application::APP_ID, 'installed', $installed);
 		$this->deleteTree($this->craftDir() . '/' . $id);
+		$this->writeLauncherLinks();
 		try {
 			$folder = $this->appData->getFolder('releases');
 			foreach ($folder->getDirectoryListing() as $file) {
@@ -148,6 +191,7 @@ class InstallService {
 			}
 			$restored[] = $id;
 		}
+		$this->writeLauncherLinks();
 		return $restored;
 	}
 

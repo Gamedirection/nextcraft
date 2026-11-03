@@ -128,6 +128,16 @@
 			"opens": ["tcraft", "glb", "gltf", "fbx", "dae", "usd", "usda", "usdc", "usdz", "obj", "ply", "stl"],
 			"openOnly": ["fbx", "dae", "ply", "stl"]
 		},
+		"artcraft-launcher": {
+			"name": "ArtCraft Launcher",
+			"description": "All Craft apps in one place, opened from Nextcloud's app menu",
+			"repo": "storytold/craft-launcher",
+			"bridge": "launcher",
+			"native": null,
+			"opens": [],
+			"openOnly": [],
+			"launcher": true
+		},
 		"craft-anything": {
 			"name": "Craft Anything",
 			"description": "Find out how any file or program works",

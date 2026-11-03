@@ -21,7 +21,10 @@ class Update extends Install {
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output): int {
-		$ids = $input->getArgument('apps') === [] ? array_keys($this->installer->installed()) : $this->selection($input, true);
+		// Without arguments: everything installed from a release (local builds are skipped).
+		$ids = $input->getArgument('apps') === []
+			? array_keys(array_filter($this->installer->installed(), fn ($e) => ($e['tag'] ?? null) !== null))
+			: $this->selection($input, true);
 		if ($input->getOption('rollback')) {
 			foreach ($ids as $id) {
 				try {

@@ -13,7 +13,7 @@
 - Admins install and update the apps from the official releases (checksums verified) with one click or `occ nextcraft:update`.
 
 The Craft apps are developed by storytold (https://github.com/storytold) and are downloaded from their GitHub releases when you install them; NextCraft does not bundle them.]]></description>
-	<version>0.1.0</version>
+	<version>0.2.0</version>
 	<licence>agpl</licence>
 	<author>NextCraft contributors</author>
 	<namespace>NextCraft</namespace>
@@ -47,6 +47,15 @@ The Craft apps are developed by storytold (https://github.com/storytold) and are
 		<command>OCA\NextCraft\Command\Update</command>
 		<command>OCA\NextCraft\Command\Remove</command>
 	</commands>
+	<navigations>
+		<navigation>
+			<id>nextcraft</id>
+			<name>ArtCraft Launcher</name>
+			<route>nextcraft.launcher.show</route>
+			<icon>app.svg</icon>
+			<order>11</order>
+		</navigation>
+	</navigations>
 	<settings>
 		<admin>OCA\NextCraft\Settings\Admin</admin>
 		<admin-section>OCA\NextCraft\Settings\Section</admin-section>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
 	'routes' => [
+		['name' => 'launcher#show', 'url' => '/', 'verb' => 'GET'],
 		['name' => 'editor#show', 'url' => '/edit/{app}', 'verb' => 'GET'],
 		['name' => 'asset#show', 'url' => '/asset/{app}/{version}/{path}', 'verb' => 'GET', 'requirements' => ['path' => '.+']],
 		['name' => 'prefs#set', 'url' => '/prefs', 'verb' => 'POST'],
