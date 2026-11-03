@@ -128,6 +128,15 @@
 			"opens": ["tcraft", "glb", "gltf", "fbx", "dae", "usd", "usda", "usdc", "usdz", "obj", "ply", "stl"],
 			"openOnly": ["fbx", "dae", "ply", "stl"]
 		},
+		"materialcraft": {
+			"name": "MaterialCraft",
+			"description": "Node-based material design",
+			"repo": "storytold/materialcraft",
+			"bridge": "shim",
+			"native": "mcraft",
+			"opens": ["mcraft", "mcmat"],
+			"openOnly": []
+		},
 		"artcraft-launcher": {
 			"name": "ArtCraft Launcher",
 			"description": "All Craft apps in one place, opened from Nextcloud's app menu",
@@ -160,7 +169,7 @@
 		"dxf": "cadcraft",
 		"fig": "figcraft", "sketch": "figcraft", "jam": "figcraft", "figcraft": "figcraft",
 		"vectorcraft": "vectorcraft", "designcraft": "designcraft", "deckcraft": "deckcraft",
-		"ecproj": "effectcraft", "fcproj": "filmcraft", "scraftz": "soundcraft", "scraft": "soundcraft", "tcraft": "texturecraft",
+		"ecproj": "effectcraft", "fcproj": "filmcraft", "scraftz": "soundcraft", "scraft": "soundcraft", "tcraft": "texturecraft", "mcraft": "materialcraft", "mcmat": "materialcraft",
 		"pdf": "builtin", "txt": "builtin", "md": "builtin", "html": "builtin", "htm": "builtin", "csv": "builtin", "tsv": "builtin", "svg": "builtin"
 	},
 	"$mimetypes": "Extensions NextCraft maps to a MIME type in config/mimetypemapping.json (only those Nextcloud doesn't already know). 'alias' picks the file icon.",
@@ -185,6 +194,8 @@
 		"ecproj": { "mime": "application/x-effectcraft", "alias": "video" },
 		"fcproj": { "mime": "application/x-filmcraft", "alias": "video" },
 		"scraftz": { "mime": "application/x-soundcraft", "alias": "audio" },
-		"tcraft": { "mime": "application/x-texturecraft", "alias": "image" }
+		"tcraft": { "mime": "application/x-texturecraft", "alias": "image" },
+		"mcraft": { "mime": "application/x-materialcraft", "alias": "image" },
+		"mcmat": { "mime": "application/x-materialcraft-material", "alias": "image" }
 	}
 }

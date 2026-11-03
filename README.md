@@ -2,7 +2,7 @@
 
 By [GameDirection](https://github.com/Gamedirection).
 
-Open and edit your Nextcloud files in the open-source [Craft apps](https://github.com/storytold): WordCraft, GridCraft, DeckCraft, PdfCraft, PhotoCraft, LightCraft, VectorCraft, DesignCraft, FigCraft, CADCraft, EffectCraft, FilmCraft, SoundCraft, TextureCraft and Craft Anything. They run in the browser (WebAssembly) on your Nextcloud's own address, so the Nextcloud login is the only login.
+Open and edit your Nextcloud files in the open-source [Craft apps](https://github.com/storytold): WordCraft, GridCraft, DeckCraft, PdfCraft, PhotoCraft, LightCraft, VectorCraft, DesignCraft, FigCraft, CADCraft, EffectCraft, FilmCraft, SoundCraft, TextureCraft, MaterialCraft and Craft Anything. They run in the browser (WebAssembly) on your Nextcloud's own address, so the Nextcloud login is the only login.
 
 - **Open with…** on any supported file in Files: `.docx` in WordCraft or Nextcloud Office, `.ai`/`.eps` in VectorCraft, `.indd`/`.idml` in DesignCraft, `.af` in PhotoCraft or VectorCraft, `.psd` in PhotoCraft, `.xlsx` in GridCraft, `.dxf` in CADCraft, `.pdf` in PdfCraft, raw photos in LightCraft…
 - **Default per file type.** Clicking a file follows the user's choice: ask each time (with "always use this"), a Craft app, or Nextcloud's own viewer/editor. Users change it in Personal settings ▸ NextCraft. Office formats ask by default; formats Nextcloud can't open go straight to their Craft app.
