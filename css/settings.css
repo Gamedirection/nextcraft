@@ -1,0 +1,50 @@
+.nextcraft-admin__toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 12px 0;
+}
+
+.nextcraft-admin__table,
+.nextcraft-personal__table {
+	width: 100%;
+	max-width: 900px;
+}
+
+.nextcraft-admin__table td,
+.nextcraft-admin__table th,
+.nextcraft-personal__table td,
+.nextcraft-personal__table th {
+	padding: 6px 8px;
+	vertical-align: middle;
+	text-align: start;
+}
+
+.nextcraft-admin__table small {
+	color: var(--color-text-maxcontrast);
+}
+
+.nextcraft-admin__actions {
+	white-space: nowrap;
+}
+
+.nextcraft-admin__actions button {
+	margin: 2px;
+}
+
+.nextcraft-admin__error {
+	color: var(--color-error-text, #c00);
+}
+
+.nextcraft-admin__wide {
+	width: min(420px, 100%);
+}
+
+.nextcraft-personal__filter {
+	width: min(300px, 100%);
+	margin-bottom: 8px;
+}
+
+.nextcraft-personal__table select {
+	width: min(320px, 100%);
+}

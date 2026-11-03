@@ -1,0 +1,180 @@
+{
+	"$comment": "Single source of truth for NextCraft: which Craft apps exist, where their web builds come from, which extensions each opens, the default handler per extension and the MIME types NextCraft registers. 'bridge' is 'native' when the web build speaks the ?host=parent postMessage protocol, 'shim' when NextCraft drives its own open dialog, drops and downloads. 'openOnly' extensions open but can't be written back, so Save becomes Save as <native>.",
+	"apps": {
+		"wordcraft": {
+			"name": "WordCraft",
+			"description": "Documents",
+			"repo": "storytold/wordcraft",
+			"bridge": "native",
+			"native": "docx",
+			"opens": ["docx", "docm", "dotx", "dotm", "doc", "dot", "odt", "rtf", "txt", "md", "html", "htm"],
+			"openOnly": ["doc", "dot", "html", "htm"]
+		},
+		"gridcraft": {
+			"name": "GridCraft",
+			"description": "Spreadsheets",
+			"repo": "storytold/gridcraft",
+			"bridge": "native",
+			"native": "xlsx",
+			"opens": ["xlsx", "xlsm", "xls", "xlsb", "ods", "csv", "tsv"],
+			"openOnly": ["xls", "xlsb", "ods"]
+		},
+		"deckcraft": {
+			"name": "DeckCraft",
+			"description": "Presentations",
+			"repo": "storytold/deckcraft",
+			"bridge": "shim",
+			"native": "deckcraft",
+			"opens": ["deckcraft", "slidecraft", "pptx", "potx", "ppsx"],
+			"openOnly": []
+		},
+		"pdfcraft": {
+			"name": "PdfCraft",
+			"description": "PDF reading and editing",
+			"repo": "storytold/pdfcraft",
+			"bridge": "native",
+			"native": "pdf",
+			"opens": ["pdf"],
+			"openOnly": []
+		},
+		"photocraft": {
+			"name": "PhotoCraft",
+			"description": "Image editing",
+			"repo": "storytold/photocraft",
+			"bridge": "shim",
+			"native": "pcraft",
+			"opens": ["pcraft", "psd", "psb", "psdt", "ora", "xcf", "kra", "krz", "pdn", "png", "jpg", "jpeg", "tif", "tiff", "webp", "gif", "bmp", "tga", "ico", "qoi", "exr", "hdr", "dds", "heic", "heif", "dng", "cr2", "nef", "nrw", "arw", "pef", "orf", "rw2", "raf", "svg", "svgz", "af", "afphoto", "afdesign", "afpub"],
+			"openOnly": ["psdt", "xcf", "kra", "krz", "pdn", "heic", "heif", "dng", "cr2", "nef", "nrw", "arw", "pef", "orf", "rw2", "raf", "svg", "svgz", "af", "afphoto", "afdesign", "afpub"]
+		},
+		"lightcraft": {
+			"name": "LightCraft",
+			"description": "Photo library and raw development",
+			"repo": "storytold/lightcraft",
+			"bridge": "shim",
+			"native": null,
+			"opens": ["dng", "cr2", "cr3", "nef", "nrw", "arw", "sr2", "srf", "raf", "orf", "rw2", "rwl", "pef", "srw", "iiq", "crw", "mrw", "x3f", "kdc", "mos", "erf", "3fr", "fff", "mef"],
+			"openOnly": ["dng", "cr2", "cr3", "nef", "nrw", "arw", "sr2", "srf", "raf", "orf", "rw2", "rwl", "pef", "srw", "iiq", "crw", "mrw", "x3f", "kdc", "mos", "erf", "3fr", "fff", "mef"]
+		},
+		"vectorcraft": {
+			"name": "VectorCraft",
+			"description": "Vector illustration",
+			"repo": "storytold/vectorcraft",
+			"bridge": "shim",
+			"native": "vectorcraft",
+			"opens": ["vectorcraft", "drawcraft", "vctemplate", "ai", "ait", "eps", "epsf", "ps", "svg", "svgz", "pdf", "psd", "psb", "dxf", "emf", "wmf", "af", "afdesign", "afpub"],
+			"openOnly": ["drawcraft", "ait", "epsf", "ps", "psb", "af", "afdesign", "afpub"]
+		},
+		"designcraft": {
+			"name": "DesignCraft",
+			"description": "Page layout and publishing",
+			"repo": "storytold/designcraft",
+			"bridge": "shim",
+			"native": "designcraft",
+			"opens": ["designcraft", "idml", "indd", "indt"],
+			"openOnly": ["indd", "indt"]
+		},
+		"figcraft": {
+			"name": "FigCraft",
+			"description": "Interface design and prototyping",
+			"repo": "storytold/figcraft",
+			"bridge": "shim",
+			"native": "figcraft",
+			"opens": ["figcraft", "fig", "jam", "sketch", "penpot", "svg"],
+			"openOnly": ["jam", "sketch", "penpot"],
+			"liveSessions": true
+		},
+		"cadcraft": {
+			"name": "CADCraft",
+			"description": "Computer-aided design and drafting",
+			"repo": "storytold/cadcraft",
+			"bridge": "native",
+			"native": "dxf",
+			"opens": ["dxf"],
+			"openOnly": []
+		},
+		"effectcraft": {
+			"name": "EffectCraft",
+			"description": "Motion graphics and visual effects",
+			"repo": "storytold/effectcraft",
+			"bridge": "shim",
+			"native": "ecproj",
+			"opens": ["ecproj", "lottie", "mp4", "mov", "mkv", "webm", "mxf", "avi"],
+			"openOnly": ["lottie", "mp4", "mov", "mkv", "webm", "mxf", "avi"]
+		},
+		"filmcraft": {
+			"name": "FilmCraft",
+			"description": "Video editing, color and sound",
+			"repo": "storytold/filmcraft",
+			"bridge": "shim",
+			"native": "fcproj",
+			"opens": ["fcproj", "fcpxml", "aaf", "edl", "otio", "mp4", "m4v", "mov", "mkv", "webm", "mxf", "avi", "mts", "m2ts"],
+			"openOnly": ["fcpxml", "aaf", "edl", "otio", "mp4", "m4v", "mov", "mkv", "webm", "mxf", "avi", "mts", "m2ts"]
+		},
+		"soundcraft": {
+			"name": "SoundCraft",
+			"description": "Audio recording and mixing",
+			"repo": "storytold/soundcraft",
+			"bridge": "shim",
+			"native": "scraftz",
+			"opens": ["scraftz", "scraft", "mid", "midi", "wav", "aif", "aiff", "flac", "mp3", "m4a", "ogg", "caf"],
+			"openOnly": ["mid", "midi", "mp3", "m4a", "ogg", "caf"]
+		},
+		"texturecraft": {
+			"name": "TextureCraft",
+			"description": "3D texture painting",
+			"repo": "storytold/texturecraft",
+			"bridge": "shim",
+			"native": "tcraft",
+			"opens": ["tcraft", "glb", "gltf", "fbx", "dae", "usd", "usda", "usdc", "usdz", "obj", "ply", "stl"],
+			"openOnly": ["fbx", "dae", "ply", "stl"]
+		},
+		"craft-anything": {
+			"name": "Craft Anything",
+			"description": "Find out how any file or program works",
+			"repo": "storytold/craft-anything",
+			"bridge": "shim",
+			"native": null,
+			"opens": ["*"],
+			"openOnly": ["*"]
+		}
+	},
+	"$defaults": "Default handler per extension when the user hasn't chosen one: 'ask' shows the chooser, 'builtin' leaves Nextcloud's own viewer/editor (Collabora, Text, Viewer) as the click action, an app id opens that app. Extensions not listed: 'builtin' when Nextcloud can open them, otherwise the only Craft app that can, otherwise 'ask'.",
+	"defaults": {
+		"docx": "ask", "docm": "ask", "dotx": "ask", "doc": "ask", "odt": "ask", "rtf": "ask",
+		"xlsx": "ask", "xlsm": "ask", "xls": "ask", "ods": "ask",
+		"pptx": "ask", "potx": "ask", "ppsx": "ask",
+		"af": "ask", "afdesign": "ask", "afpub": "ask", "afphoto": "photocraft",
+		"ai": "vectorcraft", "ait": "vectorcraft", "eps": "vectorcraft",
+		"indd": "designcraft", "indt": "designcraft", "idml": "designcraft",
+		"psd": "photocraft", "psb": "photocraft", "pcraft": "photocraft",
+		"dxf": "cadcraft",
+		"fig": "figcraft", "sketch": "figcraft", "jam": "figcraft", "figcraft": "figcraft",
+		"vectorcraft": "vectorcraft", "designcraft": "designcraft", "deckcraft": "deckcraft",
+		"ecproj": "effectcraft", "fcproj": "filmcraft", "scraftz": "soundcraft", "scraft": "soundcraft", "tcraft": "texturecraft",
+		"pdf": "builtin", "txt": "builtin", "md": "builtin", "html": "builtin", "htm": "builtin", "csv": "builtin", "tsv": "builtin", "svg": "builtin"
+	},
+	"$mimetypes": "Extensions NextCraft maps to a MIME type in config/mimetypemapping.json (only those Nextcloud doesn't already know). 'alias' picks the file icon.",
+	"mimetypes": {
+		"psb": { "mime": "image/vnd.adobe.photoshop", "alias": "image" },
+		"af": { "mime": "application/x-affinity", "alias": "image" },
+		"afphoto": { "mime": "application/x-affinity-photo", "alias": "image" },
+		"afdesign": { "mime": "application/x-affinity-designer", "alias": "image" },
+		"afpub": { "mime": "application/x-affinity-publisher", "alias": "x-office-document" },
+		"indd": { "mime": "application/x-indesign", "alias": "x-office-document" },
+		"indt": { "mime": "application/x-indesign-template", "alias": "x-office-document" },
+		"idml": { "mime": "application/vnd.adobe.indesign-idml-package", "alias": "x-office-document" },
+		"fig": { "mime": "application/x-figma", "alias": "image" },
+		"sketch": { "mime": "application/x-sketch", "alias": "image" },
+		"dxf": { "mime": "image/vnd.dxf", "alias": "image" },
+		"dwg": { "mime": "image/vnd.dwg", "alias": "image" },
+		"pcraft": { "mime": "application/x-photocraft", "alias": "image" },
+		"vectorcraft": { "mime": "application/x-vectorcraft", "alias": "image" },
+		"designcraft": { "mime": "application/x-designcraft", "alias": "x-office-document" },
+		"deckcraft": { "mime": "application/x-deckcraft", "alias": "x-office-presentation" },
+		"figcraft": { "mime": "application/x-figcraft", "alias": "image" },
+		"ecproj": { "mime": "application/x-effectcraft", "alias": "video" },
+		"fcproj": { "mime": "application/x-filmcraft", "alias": "video" },
+		"scraftz": { "mime": "application/x-soundcraft", "alias": "audio" },
+		"tcraft": { "mime": "application/x-texturecraft", "alias": "image" }
+	}
+}

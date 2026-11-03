@@ -1,0 +1,15 @@
+# figcraft-server settings (all keys: https://github.com/storytold/figcraft/blob/main/docs/server.md#configuration)
+listen = "0.0.0.0:47900"
+data = "/data"
+# The address people use: the proxied path on your Nextcloud host (see apache.conf / nginx.conf).
+public_url = "wss://cloud.example.com/nextcraft-live/"
+# The reverse proxy's address as seen from this container (its Docker network range).
+trusted_proxy = "172.16.0.0/12"
+# false: publishing new files needs the server key (figcraft-server key); joining with codes
+# always works. true: anyone who can reach the address may publish, within the limits below.
+open_publish = false
+idle_days = 30
+max_file_mb = 32
+max_total_mb = 4096
+max_files_per_ip = 50
+max_mb_per_ip = 512

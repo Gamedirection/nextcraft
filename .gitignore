@@ -1,0 +1,7 @@
+/node_modules/
+/js/
+/build/
+/vendor/
+/craft/*
+!/craft/.htaccess
+.DS_Store

@@ -1,0 +1,15 @@
+# Craft app builds are plain static files. Nextcloud's root .htaccess rewrites every request
+# whose extension it doesn't know (e.g. .json, .webmanifest, .part-aa) to index.php, which
+# answers 404; a RewriteEngine directive here replaces the parent's rules for this folder.
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+</IfModule>
+<IfModule mod_mime.c>
+  AddType application/wasm .wasm
+  AddType text/javascript .js .mjs
+  AddType application/manifest+json .webmanifest
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+Options -Indexes

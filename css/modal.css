@@ -1,0 +1,134 @@
+.nextcraft-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	background: rgba(0, 0, 0, 0.45);
+}
+
+.nextcraft-modal__dialog {
+	width: min(460px, 100%);
+	max-height: calc(100vh - 32px);
+	overflow: auto;
+	padding: 20px;
+	border-radius: var(--border-radius-large, 12px);
+	background: var(--color-main-background, #fff);
+	color: var(--color-main-text, #222);
+	box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+	font: inherit;
+}
+
+.nextcraft-modal__title {
+	margin: 0 0 8px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.nextcraft-modal__text {
+	margin: 0 0 12px;
+	color: var(--color-text-maxcontrast, #666);
+}
+
+.nextcraft-modal__options {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.nextcraft-modal__option {
+	display: flex !important;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	min-height: 48px;
+	margin: 0 !important;
+	padding: 8px 12px !important;
+	text-align: start;
+	border: 1px solid var(--color-border, #ddd) !important;
+	border-radius: var(--border-radius-element, 8px) !important;
+	background: var(--color-main-background, #fff) !important;
+	color: inherit !important;
+	cursor: pointer;
+}
+
+.nextcraft-modal__option:hover,
+.nextcraft-modal__option:focus-visible {
+	background: var(--color-background-hover, #f2f2f2) !important;
+	border-color: var(--color-primary-element, #0082c9) !important;
+}
+
+.nextcraft-modal__option--primary {
+	background: var(--color-primary-element, #0082c9) !important;
+	color: var(--color-primary-element-text, #fff) !important;
+	border-color: transparent !important;
+}
+
+.nextcraft-modal__icon {
+	width: 32px;
+	height: 32px;
+	flex: none;
+	border-radius: 6px;
+}
+
+.nextcraft-modal__label {
+	display: flex;
+	flex-direction: column;
+	font-weight: 600;
+}
+
+.nextcraft-modal__label small {
+	font-weight: normal;
+	color: var(--color-text-maxcontrast, #666);
+}
+
+.nextcraft-modal__check {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+.nextcraft-modal__field {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-bottom: 12px;
+	font-weight: 600;
+}
+
+.nextcraft-modal__field input[type="text"] {
+	width: 100%;
+	margin: 0;
+	font-weight: normal;
+}
+
+.nextcraft-modal__row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: normal;
+}
+
+.nextcraft-modal__folder {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--color-text-maxcontrast, #666);
+}
+
+.nextcraft-modal__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.nextcraft-modal__actions button {
+	margin: 0;
+}

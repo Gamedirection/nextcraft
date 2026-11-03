@@ -1,0 +1,24 @@
+# FigCraft live session server for NextCraft. Join it to the Docker network your Nextcloud web
+# server is on, so the proxy can reach it as figcraft-server:47900 without publishing a port.
+#   TAG=v0.14.0 NEXTCLOUD_NETWORK=nextcloud_default docker compose up -d --build
+services:
+  figcraft-server:
+    build:
+      context: .
+      args:
+        TAG: ${TAG:?set TAG to a figcraft release tag, e.g. v0.14.0}
+    image: nextcraft/figcraft-server:${TAG}
+    container_name: figcraft-server
+    restart: unless-stopped
+    volumes:
+      - figcraft-data:/data
+      - ./server.toml:/etc/figcraft-server/server.toml:ro
+    networks: [nextcloud]
+
+volumes:
+  figcraft-data:
+
+networks:
+  nextcloud:
+    name: ${NEXTCLOUD_NETWORK:?set NEXTCLOUD_NETWORK to your Nextcloud web server network}
+    external: true
