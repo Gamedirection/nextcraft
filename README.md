@@ -78,6 +78,7 @@ FigCraft co-editing needs a `figcraft-server` reachable over `wss://`. `deploy/f
 
 ## How it works
 
+- File types: NextCraft maps extensions like `.af`, `.indd` and `.mcraft` to MIME types but doesn't run `occ maintenance:mimetype:update-js`, because that rewrites a core file and trips the code integrity check. Such files show a generic icon.
 - `lib/catalog.json` is the single source of truth: apps, the extensions each opens, which ones it can't write back, default handlers and the MIME types NextCraft registers (`config/mimetypemapping.json`, merged, removed again on disable).
 - Files gets two actions: a default click action (ranked before Nextcloud's Viewer, and off when the user chose Nextcloud's handler) and an **Open with…** submenu.
 - `/apps/nextcraft/edit/<app>?path=…` frames the app from the same origin and moves the file over WebDAV:

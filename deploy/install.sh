@@ -76,7 +76,6 @@ if occ app:list --enabled --output=json | grep -q '"nextcraft"'; then
 else
     occ app:enable nextcraft
 fi
-occ maintenance:mimetype:update-js >/dev/null
 
 case "$apps" in
     none) ;;

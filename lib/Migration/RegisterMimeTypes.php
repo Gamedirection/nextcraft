@@ -34,6 +34,9 @@ class RegisterMimeTypes extends MimeTypes implements IRepairStep {
 
 		// Files already in the file cache keep their old type until the background job updates them.
 		$this->jobList->add(UpdateFileCacheMimeTypes::class);
-		$output->info('Registered ' . count($this->ours()) . ' file types. Run "occ maintenance:mimetype:update-js" to refresh their icons.');
+		// Not running maintenance:mimetype:update-js on purpose: it rewrites core/js/mimetypelist.js,
+		// which then fails Nextcloud's code integrity check. The types work without it; their files
+		// show a generic icon.
+		$output->info('Registered ' . count($this->ours()) . ' file types.');
 	}
 }
