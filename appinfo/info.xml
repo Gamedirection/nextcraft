@@ -19,8 +19,8 @@ The Craft apps are developed by storytold (https://github.com/storytold) and are
 	<namespace>NextCraft</namespace>
 	<category>office</category>
 	<category>multimedia</category>
-	<bugs>https://git.gamedirection.net/asierputowski/nextcraft/issues</bugs>
-	<repository type="git">https://git.gamedirection.net/asierputowski/nextcraft</repository>
+	<bugs>https://git.gamedirection.net/interfaceas/nextcraft/issues</bugs>
+	<repository type="git">https://git.gamedirection.net/interfaceas/nextcraft</repository>
 	<dependencies>
 		<php min-version="8.2"/>
 		<lib>zip</lib>
