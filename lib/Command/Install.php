@@ -31,7 +31,7 @@ class Install extends Command {
 	protected function selection(InputInterface $input, bool $defaultInstalled): array {
 		$ids = $input->getArgument('apps');
 		if ($input->getOption('all')) {
-			return array_keys($this->catalog->apps());
+			return array_keys(array_filter($this->catalog->apps(), fn ($app) => !($app['launcher'] ?? false)));
 		}
 		if ($ids === [] && $defaultInstalled) {
 			return array_keys($this->installer->installed());

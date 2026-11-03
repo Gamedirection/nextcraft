@@ -15,12 +15,12 @@
 The Craft apps are developed by storytold (https://github.com/storytold) and are downloaded from their GitHub releases when you install them; NextCraft does not bundle them.]]></description>
 	<version>0.2.0</version>
 	<licence>agpl</licence>
-	<author>NextCraft contributors</author>
+	<author mail="alex@gamedirection.net" homepage="https://github.com/Gamedirection">GameDirection</author>
 	<namespace>NextCraft</namespace>
 	<category>office</category>
 	<category>multimedia</category>
-	<bugs>https://git.gamedirection.net/interfaceas/nextcraft/issues</bugs>
-	<repository type="git">https://git.gamedirection.net/interfaceas/nextcraft</repository>
+	<bugs>https://github.com/Gamedirection/nextcraft/issues</bugs>
+	<repository type="git">https://github.com/Gamedirection/nextcraft</repository>
 	<dependencies>
 		<php min-version="8.2"/>
 		<lib>zip</lib>
@@ -53,7 +53,7 @@ The Craft apps are developed by storytold (https://github.com/storytold) and are
 			<name>ArtCraft Launcher</name>
 			<route>nextcraft.launcher.show</route>
 			<icon>app.svg</icon>
-			<order>11</order>
+			<order>1000</order>
 		</navigation>
 	</navigations>
 	<settings>

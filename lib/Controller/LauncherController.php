@@ -30,6 +30,7 @@ class LauncherController extends Controller {
 				'message' => $this->l10n->t('The ArtCraft Launcher is not installed yet. Ask your administrator to install it (see Administration settings ▸ NextCraft).'),
 			]);
 		}
+		$this->installer->writeLauncherLinks();
 		Util::addStyle(Application::APP_ID, 'editor');
 		$response = new TemplateResponse(Application::APP_ID, 'launcher', ['url' => $base . 'index.html']);
 		$csp = new ContentSecurityPolicy();

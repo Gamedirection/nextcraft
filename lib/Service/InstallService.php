@@ -67,6 +67,10 @@ class InstallService {
 	 */
 	public function install(string $id, ?string $tag = null, bool $force = false): array {
 		$app = $this->catalog->app($id) ?? throw new \InvalidArgumentException("Unknown Craft app: {$id}");
+		if ($app['launcher'] ?? false) {
+			// The official launcher only offers downloads; NextCraft needs the GameDirection build.
+			throw new \RuntimeException("{$app['name']} is installed from the GameDirection build: run deploy/install-launcher.sh (see README)");
+		}
 		$release = $this->releases->release($app['repo'], $tag, true);
 		$version = $this->safeSegment($release['version']);
 		$current = $this->installed()[$id] ?? null;
@@ -115,7 +119,9 @@ class InstallService {
 	/**
 	 * Writes craft-links.json next to every installed launcher build: app id => this
 	 * Nextcloud's editor URL for each installed Craft app, so the launcher's Open buttons open
-	 * them here (apps that aren't installed keep their download buttons).
+	 * them here (apps that aren't installed keep their download buttons). Called again on each
+	 * launcher page view, so the addresses follow the host the page was opened on (occ may not
+	 * know it).
 	 */
 	public function writeLauncherLinks(): void {
 		$installed = $this->installed();
@@ -131,8 +137,9 @@ class InstallService {
 			}
 			foreach (array_filter([$entry['version'], $entry['previous'] ?? null]) as $version) {
 				$dir = $this->versionDir($id, $version);
-				if (is_dir($dir)) {
-					file_put_contents($dir . '/craft-links.json', json_encode((object)$links, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+				$json = json_encode((object)$links, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n";
+				if (is_dir($dir) && @file_get_contents($dir . '/craft-links.json') !== $json) {
+					file_put_contents($dir . '/craft-links.json', $json);
 				}
 			}
 		}

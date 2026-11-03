@@ -1,0 +1,4 @@
+[submodule "launcher"]
+	path = launcher
+	url = https://github.com/Gamedirection/craft-launcher.git
+	branch = NextCraft

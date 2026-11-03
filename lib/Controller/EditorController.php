@@ -16,6 +16,7 @@ use OCP\AppFramework\Services\IInitialState;
 use OCP\Files\IRootFolder;
 use OCP\IAppConfig;
 use OCP\IL10N;
+use OCP\INavigationManager;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUserSession;
@@ -32,6 +33,7 @@ class EditorController extends Controller {
 		private IURLGenerator $urlGenerator,
 		private IAppConfig $appConfig,
 		private IL10N $l10n,
+		private INavigationManager $navigation,
 	) {
 		parent::__construct(Application::APP_ID, $request);
 	}
@@ -74,6 +76,8 @@ class EditorController extends Controller {
 			];
 		}
 
+		// Editing a file belongs to Files in the app menu (NextCraft's own entry is the launcher).
+		$this->navigation->setActiveEntry('files');
 		$entry = $this->installer->installed()[$app];
 		$version = $entry['version'];
 		$this->initialState->provideInitialState('editor', [

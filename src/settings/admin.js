@@ -52,6 +52,9 @@ const remove = (id) => act(id, () => axios.delete(url('/apps/' + id)), () => t('
 
 async function installAll(onlyUpdates) {
 	for (const [id, app] of Object.entries(state.apps)) {
+		if (app.launcher) {
+			continue
+		}
 		const wanted = onlyUpdates ? app.installed && app.latest && app.latest !== app.installed : !app.installed
 		if (wanted) {
 			await install(id)
@@ -84,8 +87,9 @@ function appRow(id, app) {
 		h('td', {}, status),
 		h('td', { class: 'nextcraft-admin__actions' },
 			working ? h('span', { class: 'icon-loading-small' }) : [
-				!app.installed && h('button', { onclick: () => install(id) }, t('nextcraft', 'Install')),
-				update && h('button', { class: 'primary', onclick: () => install(id) }, t('nextcraft', 'Update')),
+				!app.installed && !app.launcher && h('button', { onclick: () => install(id) }, t('nextcraft', 'Install')),
+				!app.installed && app.launcher && h('small', {}, t('nextcraft', 'Install with deploy/install-launcher.sh')),
+				update && !app.launcher && h('button', { class: 'primary', onclick: () => install(id) }, t('nextcraft', 'Update')),
 				app.previous && h('button', { onclick: () => rollback(id), title: t('nextcraft', 'Go back to {version}', { version: app.previous }) }, t('nextcraft', 'Roll back')),
 				app.installed && h('button', { onclick: () => remove(id) }, t('nextcraft', 'Remove')),
 			]),

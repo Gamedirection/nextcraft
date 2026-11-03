@@ -32,7 +32,7 @@ class AdminController extends Controller {
 		foreach ($this->catalog->apps() as $id => $app) {
 			$latest = null;
 			$error = null;
-			if ($check) {
+			if ($check && !($app['launcher'] ?? false)) {
 				try {
 					$latest = $this->releases->release($app['repo'])['version'];
 				} catch (\Throwable $e) {
@@ -47,6 +47,7 @@ class AdminController extends Controller {
 				'previous' => $installed[$id]['previous'] ?? null,
 				'latest' => $latest,
 				'error' => $error,
+				'launcher' => $app['launcher'] ?? false,
 			];
 		}
 		return new JSONResponse(['apps' => $apps, 'settings' => $this->readSettings()]);

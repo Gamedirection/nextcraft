@@ -5,9 +5,11 @@
  * - assets the web server won't serve directly (Nextcloud's .htaccess 404s unknown extensions)
  *   are fetched again through NextCraft's asset route;
  * - FigCraft gets the configured live session server (<meta name="figcraft-server">);
- * - for apps without the ?host=parent bridge: downloads (<a download> with a blob) become
- *   NextCraft saves, the app's file dialog (rfd) offers Nextcloud files, and the editor can open
- *   a document by dropping it onto the app's canvas, which every Craft app accepts.
+ * - in every app: downloads (<a download> with a blob) become NextCraft saves (Nextcloud or
+ *   device), the app's own file dialogs (rfd or a plain file input) offer Nextcloud files, and
+ *   the File System Access pickers are hidden so the apps use those paths;
+ * - for apps without the ?host=parent bridge the editor opens the document by dropping it onto
+ *   the app's canvas, which every Craft app accepts.
  */
 ;(function () {
 	let host = null
@@ -53,8 +55,17 @@
 		document.head.append(meta)
 	}
 
-	if (config.bridge === 'native') {
-		return
+	// ---- File System Access pickers -------------------------------------------------------
+	// Apps that find these use them instead of a file input or a download, which bypasses
+	// NextCraft (FilmCraft opens with showOpenFilePicker, WordCraft and GridCraft save with
+	// showSaveFilePicker). Every Craft app falls back when they are missing.
+	for (const picker of ['showOpenFilePicker', 'showSaveFilePicker']) {
+		try {
+			delete Window.prototype[picker]
+			delete window[picker]
+		} catch {
+			// not configurable: leave it
+		}
 	}
 
 	// ---- downloads become saves ------------------------------------------------------------
@@ -169,7 +180,7 @@
 		canvas.focus?.()
 	}
 
-	const attach = () => host.attach({ whenReady, open })
+	const attach = () => config.bridge === 'native' ? null : host.attach({ whenReady, open })
 	if (document.readyState === 'loading') {
 		document.addEventListener('DOMContentLoaded', attach, { once: true })
 	} else {
