@@ -75,7 +75,7 @@ export class Dav {
 			credentials: 'same-origin',
 		})
 		const text = response.ok ? await response.text() : ''
-		return /<d:getetag>([^<]*)<\/d:getetag>/.exec(text)?.[1] ?? null
+		return quoteEtag(/<d:getetag>([^<]*)<\/d:getetag>/.exec(text)?.[1] ?? null)
 	}
 
 	async exists(path) {
@@ -117,20 +117,28 @@ export class Dav {
 
 	/** File picker limited to `exts` (empty = any); resolves to the chosen file's path or null. */
 	async pickFile(exts) {
+		let chosen = null
 		const builder = getFilePickerBuilder(t('nextcraft', 'Open from Nextcloud'))
 			.setMultiSelect(false)
 			.allowDirectories(false)
+			.addButton({ label: t('nextcraft', 'Open'), variant: 'primary', callback: (nodes) => { chosen = nodes[0]?.path ?? null } })
 		if (exts.length > 0) {
 			builder.setFilter((node) => node.type === 'folder' || exts.includes((node.extension ?? '').replace(/^\./, '').toLowerCase()))
 		}
-		try {
-			return await builder.build().pick()
-		} catch {
-			return null
-		}
+		await builder.build().pickNodes().catch(() => null)
+		return chosen
 	}
 }
 
 function etagOf(response) {
-	return response.headers.get('OC-ETag') ?? response.headers.get('ETag')
+	return quoteEtag(response.headers.get('ETag') ?? response.headers.get('OC-ETag'))
+}
+
+/** ETags as If-Match wants them: quoted ("abc"). Nextcloud's OC-ETag and PROPFIND XML differ. */
+export function quoteEtag(etag) {
+	if (!etag) {
+		return null
+	}
+	const value = etag.replace(/^W\//, '').replace(/&quot;/g, '"').trim()
+	return value.startsWith('"') ? value : `"${value}"`
 }

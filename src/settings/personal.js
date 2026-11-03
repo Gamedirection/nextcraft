@@ -68,9 +68,9 @@ function render() {
 	root.replaceChildren(
 		h('h2', {}, t('nextcraft', 'Default apps')),
 		h('p', { class: 'settings-hint' }, t('nextcraft', 'Choose what opens when you click a file in Files. “Open with…” in the file menu always lists every app.')),
-		rows.length === 0
-			? h('p', {}, t('nextcraft', 'No Craft apps are installed yet.'))
-			: [filter, h('table', { class: 'grid nextcraft-personal__table' }, h('thead', {}, h('tr', {}, h('th', {}, t('nextcraft', 'File type')), h('th', {}, t('nextcraft', 'Opens in')))), tbody)],
+		...(rows.length === 0
+			? [h('p', {}, t('nextcraft', 'No Craft apps are installed yet.'))]
+			: [filter, h('table', { class: 'grid nextcraft-personal__table' }, h('thead', {}, h('tr', {}, h('th', {}, t('nextcraft', 'File type')), h('th', {}, t('nextcraft', 'Opens in')))), tbody)]),
 	)
 }
 

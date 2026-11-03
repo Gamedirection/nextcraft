@@ -227,10 +227,37 @@ class InstallService {
 			throw new \RuntimeException('The web build has no index.html');
 		}
 		file_put_contents($index, $this->injectShim($html));
+		$this->fixPackaging($staging);
 
 		$this->deleteTree($target);
 		if (!rename($staging, $target)) {
 			throw new \RuntimeException("Cannot move {$staging} into place");
+		}
+	}
+
+	/**
+	 * Works around packaging mistakes seen in released web builds, so an affected release still
+	 * starts. PhotoCraft 0.17–0.19 ship app/<name>.js importing ./snippets/… while snippets/ sits
+	 * at the site root (storytold/photocraft#10590): copy it next to the script that needs it.
+	 */
+	private function fixPackaging(string $dir): void {
+		if (!is_dir($dir . '/snippets')) {
+			return;
+		}
+		foreach (glob($dir . '/*/*.js') ?: [] as $script) {
+			$sub = dirname($script);
+			if (!is_dir($sub . '/snippets') && str_contains((string)file_get_contents($script), './snippets/')) {
+				$this->copyTree($dir . '/snippets', $sub . '/snippets');
+				$this->logger->info('NextCraft: copied snippets/ into ' . basename($sub) . '/ (upstream packaging fix)');
+			}
+		}
+	}
+
+	private function copyTree(string $from, string $to): void {
+		@mkdir($to, 0755, true);
+		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($from, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+			$target = $to . '/' . substr($item->getPathname(), strlen($from) + 1);
+			$item->isDir() ? @mkdir($target, 0755, true) : copy($item->getPathname(), $target);
 		}
 	}
 

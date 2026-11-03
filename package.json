@@ -6,8 +6,8 @@
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "scripts": {
-    "build": "vite build --mode production && vite build --config vite.shim.config.js",
-    "dev": "vite build --mode development --watch",
+    "build": "rm -rf js && for e in files editor admin personal; do NC_ENTRY=$e vite build --mode production || exit 1; done && vite build --config vite.shim.config.js",
+    "dev": "NC_ENTRY=${NC_ENTRY:-editor} vite build --mode development --watch",
     "test": "vitest run"
   },
   "browserslist": [

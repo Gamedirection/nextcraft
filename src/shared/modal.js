@@ -3,7 +3,18 @@
  * on the editor page. Each returns a promise; Escape or the backdrop resolve with null.
  */
 import { t } from '@nextcloud/l10n'
-import '../../css/modal.css'
+import { generateFilePath } from '@nextcloud/router'
+
+/** Loads css/modal.css once (the Files page doesn't pick up styles bundled with init scripts). */
+function ensureStyles() {
+	if (!document.getElementById('nextcraft-modal-css')) {
+		const link = document.createElement('link')
+		link.id = 'nextcraft-modal-css'
+		link.rel = 'stylesheet'
+		link.href = generateFilePath('nextcraft', 'css', 'modal.css')
+		document.head.append(link)
+	}
+}
 
 function el(tag, attrs = {}, ...children) {
 	const node = document.createElement(tag)
@@ -25,6 +36,7 @@ function el(tag, attrs = {}, ...children) {
 }
 
 function open(build) {
+	ensureStyles()
 	return new Promise((resolve) => {
 		const previous = document.activeElement
 		let done = false

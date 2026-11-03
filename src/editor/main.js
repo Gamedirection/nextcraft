@@ -11,10 +11,9 @@ import { showError, showSuccess, showWarning } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/style.css'
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
-import { generateUrl } from '@nextcloud/router'
 import { extOf } from '../shared/catalog.js'
 import { choose, saveDialog } from '../shared/modal.js'
-import { ConflictError, Dav, LockedError, dirname, joinPath } from './dav.js'
+import { ConflictError, Dav, LockedError, dirname, joinPath, quoteEtag } from './dav.js'
 
 const config = loadState('nextcraft', 'editor')
 const root = document.getElementById('nextcraft-editor')
@@ -56,10 +55,13 @@ async function load() {
 	const file = config.file
 	setStatus(t('nextcraft', 'Opening {name}…', { name: file.name }))
 	const { bytes, etag } = await dav.read(file.path)
-	current = remember({ name: file.name, path: file.path, etag: etag ?? file.etag, canWrite: file.canWrite })
+	current = remember({ name: file.name, path: file.path, etag: etag ?? quoteEtag(file.etag), canWrite: file.canWrite })
 	if (file.canWrite) {
 		lockState = await dav.lock(file.path)
-		if (lockState === 'held-by-other') {
+		if (lockState === 'locked') {
+			// Taking the lock changes the file's ETag.
+			current.etag = (await dav.etag(file.path)) ?? current.etag
+		} else if (lockState === 'held-by-other') {
 			current.canWrite = false
 			showWarning(t('nextcraft', '{name} is being edited by someone else. Your changes will be saved as a copy.', { name: file.name }), { timeout: -1 })
 		}
@@ -314,11 +316,5 @@ window.addEventListener('pagehide', () => {
 		dav.unlock(config.file.path)
 	}
 })
-
-const backToFiles = document.createElement('a')
-backToFiles.className = 'nextcraft-editor__back'
-backToFiles.textContent = t('nextcraft', 'Files')
-backToFiles.href = generateUrl('/apps/files/') + (config.file ? '?dir=' + encodeURIComponent(dirname(config.file.path)) : '')
-root.prepend(backToFiles)
 
 start()

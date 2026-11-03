@@ -70,8 +70,8 @@ else
     sudo chown -R "$web_user:$web_user" "$apps_dir/nextcraft"
 fi
 
-if occ app:list --output=json | grep -q '"nextcraft"'; then
-    occ app:enable nextcraft >/dev/null
+# Already enabled: keep its settings (including a group restriction) and run the upgrade steps.
+if occ app:list --enabled --output=json | grep -q '"nextcraft"'; then
     occ upgrade >/dev/null || true
 else
     occ app:enable nextcraft

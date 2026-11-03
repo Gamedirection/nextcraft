@@ -1,7 +1,7 @@
 #nextcraft-editor {
-	position: relative;
-	width: 100%;
-	height: calc(100vh - var(--header-height, 50px));
+	position: fixed;
+	inset: var(--header-height, 50px) 0 0 0;
+	z-index: 1;
 	overflow: hidden;
 	background: var(--color-main-background, #fff);
 }
@@ -31,25 +31,6 @@
 
 .nextcraft-editor__status[hidden] {
 	display: none;
-}
-
-.nextcraft-editor__back {
-	position: absolute;
-	inset-block-end: 12px;
-	inset-inline-start: 12px;
-	z-index: 2;
-	padding: 4px 12px;
-	border-radius: var(--border-radius-pill, 20px);
-	background: var(--color-main-background-blur, rgba(255, 255, 255, 0.8));
-	color: var(--color-main-text, #222);
-	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-	font-size: 13px;
-	opacity: 0.6;
-}
-
-.nextcraft-editor__back:hover,
-.nextcraft-editor__back:focus-visible {
-	opacity: 1;
 }
 
 .nextcraft-error {
